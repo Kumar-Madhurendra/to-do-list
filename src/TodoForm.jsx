@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { toast } from "react-toastify";
+import { Plus } from "lucide-react";
 
 function TodoForm({ addTodo, todos }) {
     const [title, setTitle] = useState("");
@@ -9,7 +10,7 @@ function TodoForm({ addTodo, todos }) {
         e.preventDefault();
         
         if (title.trim().length === 0) {
-            toast.info("Please Fill input", {
+            toast.info("Please enter a task", {
                 autoClose: 2000,
             });
             return;
@@ -31,7 +32,13 @@ function TodoForm({ addTodo, todos }) {
         };
         addTodo(newTodo);
         setTitle("");
+        
+        // Success feedback
+        toast.success("Task added successfully! ✨", {
+            autoClose: 2000,
+        });
     }
+    
     return (
         <form onSubmit={handleSubmit} className="todoForm">
             <input
@@ -39,9 +46,12 @@ function TodoForm({ addTodo, todos }) {
                 type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                placeholder="What needs to be done?"
+                maxLength={100}
             />
             <button type="submit" className="todoForm__btn">
-                Add
+                <Plus size={20} />
+                <span>Add Task</span>
             </button>
         </form>
     );
